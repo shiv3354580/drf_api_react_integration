@@ -1,0 +1,21 @@
+from django.shortcuts import render,HttpResponse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
+
+# Create your views here.
+def index(request):
+    user = User.objects.create_user("john", "lennon@thebeatles.com", "johnpassword")
+    user.save()
+    return HttpResponse("working")
+
+
+def my_view(request):
+    # username = request.POST["username"]
+    # password = request.POST["password"]
+    user = authenticate(request, username='joh', password='johnpassword')
+    if user is not None:
+        login(request, user)
+        return HttpResponse("user logged in successful")
+
+    else:
+       return HttpResponse('invalid credentials')
